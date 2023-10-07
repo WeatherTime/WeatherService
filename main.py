@@ -7,9 +7,11 @@ import var
 
 app = Flask(__name__)
 
-@app.route("/get-weather")
+@app.route("/get-weather", methods=['GET'])
 def get_weather():
-    weather = weatherScraping.get_weather(var.location)
+    args = request.args
+    location = args.get("location", default="", type=str)
+    weather = weatherScraping.get_weather(location)
 
     # Generate response data
     data = weather.weather_to_dict()
